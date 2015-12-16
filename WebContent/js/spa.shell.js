@@ -115,6 +115,7 @@ spa.shell = (function() {
 				$.uriAnchor.setAnchor( anchor_map_proposed, null, true );				
 			}
 		}
+		return false;
 	}
 	
 	//-------------------- DOM 메서드 /setJqueryMap/ start  --------------------
