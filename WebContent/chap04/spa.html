@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- ie9 이상의 최신 표준 지원 -->
+<meta http-equiv='X-UA-Compatible' content="IE=edge" />
+<meta content="text/html" charset="UTF-8">
+<title>SPA chapter 4</title>
+<link rel="stylesheet" href="css/spa.css" type="text/css" />
+<link rel="stylesheet" href="css/spa.chat.css" type="text/css" />
+<link rel="stylesheet" href="css/spa.shell.css" type="text/css" />
+<!-- 3rd party -->
+<script type="text/javascript" src="js/jq/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="js/jq/jquery.uriAnchor.js"></script>
+<!-- spa -->
+<script type="text/javascript" src="js/spa.js"></script>
+<script type="text/javascript" src="js/spa.util.js"></script>
+<script type="text/javascript" src="js/spa.model.js"></script>
+<script type="text/javascript" src="js/spa.shell.js"></script>
+<script type="text/javascript" src="js/spa.chat.js"></script>
+<script>
+	$(function() {
+		spa.initModule( $('#spa') );
+	});
+</script>
+</head>
+<body>
+	<div id="spa"></div>
+</body>
+</html>

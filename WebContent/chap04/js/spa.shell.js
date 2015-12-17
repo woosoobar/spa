@@ -89,7 +89,7 @@ spa.shell = (function() {
 		s_chat_proposed;
 		
 		try {
-			anchor_map_proposed = $.uriAnchor.makeAnchorMap();			
+			anchor_map_proposed = $.uriAnchor.makeAnchorMap();
 		} catch(error) {
 			$.uriAnchor.setAnchor( anchor_map_previous, null, true);
 			return false;
@@ -100,6 +100,7 @@ spa.shell = (function() {
 		_s_chat_proposed = anchor_map_proposed._s_chat;
 		
 		if ( !anchor_map_previous || _s_chat_pervious !== _s_chat_proposed ) {
+			
 			s_chat_proposed = anchor_map_proposed.chat;
 			
 			switch ( s_chat_proposed ) {
@@ -117,8 +118,6 @@ spa.shell = (function() {
 		}
 		return false;
 	}
-	
-	
 	
 	//-------------------- DOM 메서드 /setJqueryMap/ start  --------------------
 	setJqueryMap = function() {
@@ -186,6 +185,10 @@ spa.shell = (function() {
 		stateMap.is_chat_retracted = true;
 		
 		$.uriAnchor.configModule( {schema_map : configMap.anchor_schema_map} );
+
+		// 기능 모듈 설정 및 초기화
+		spa.chat.configModule( {} );
+		spa.chat.initModule( jqueryMap.$chat );
 		
 		jqueryMap.$chat
 			.attr('title', configMap.chat_retracted_title)
