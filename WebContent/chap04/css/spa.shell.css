@@ -11,41 +11,41 @@
 	position : absolute;
 }
 .spa-shell-head {
-	top : 0;
-	left : 0;
-	right : 0;
-	bottom: 40px;
+	top    : 0;
+	left   : 0;
+	right  : 0;
+	bottom : 40px;
 }
 .spa-shell-head-logo {
-	top : 4px;
-	left : 4px;
+	top    : 4px;
+	left   : 4px;
 	height : 32px;
-	width : 128px;
+	width  : 128px;
 	background : orange;
 }
 .spa-shell-head-acct {
-	top : 4px;
-	right : 0;
-	width : 64px;
+	top    : 4px;
+	right  : 0;
+	width  : 64px;
 	height : 32px;
 	background : green;
 }
 .spa-shell-head-search {
-	top : 4px;
-	right : 64px;
-	width : 248px;
+	top    : 4px;
+	right  : 64px;
+	width  : 248px;
 	height : 32px;
 	background : blue;
 }
 .spa-shell-main {
-	top : 40px;
-	left : 0;
+	top    : 40px;
+	left   : 0;
 	bottom : 40px;
-	right : 0;
+	right  : 0;
 }
 .spa-shell-main-content, 
 .spa-shell-main-nav {
-	top : 0;
+	top    : 0;
 	bottom : 0;
 }
 .spa-shell-main-nav {
@@ -56,7 +56,7 @@
 	width : 0;
 }
 .spa-shell-main-content {
-	left : 250px;
+	left  : 250px;
 	right : 0;
 	background : #ddd;
 }
@@ -65,31 +65,31 @@
 }
 .spa-shell-foot {
 	bottom : 0;
-	left : 0;
-	right : 0;
+	left   : 0;
+	right  : 0;
 	height : 40px;
 }
 .spa-shell-chat {
 	bottom : 0;
-	right : 0;
-	width : 300px;
+	right  : 0;
+	width  : 300px;
 	height : 15px;
-	background : red;
-	cursor : pointer;
+	background 	  : red;
+	cursor 		  : pointer;
 	border-radius : 5px 0 0 0;
-	z-index : 1;
+	z-index 	  : 1;
 }
 .spa-shell-chat:hover {
 	background : #a00;
 }
 .spa-shell-modal {
-	margin-top : -200px;
+	margin-top  : -200px;
 	margin-left : -200px;
-	top : 50%;
-	left : 50%;
-	width : 400px;
-	height : 400px;
-	background : #fff;
+	top 		: 50%;
+	left 		: 50%;
+	width 		: 400px;
+	height 		: 400px;
+	background  : #fff;
 	border-radius : 3px;
-	z-index : 2;
+	z-index 	: 2;
 }

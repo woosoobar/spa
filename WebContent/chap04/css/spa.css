@@ -2,7 +2,7 @@
 
 /** 재설정 시작 */
 * {
-	margin : 0;
+	margin  : 0;
 	padding : 0;
 	-webkit-box-sizing 	: border-box;
 	-moz-box-sizing 	: border-box;
@@ -16,7 +16,7 @@ ol,ul,dl { list-style-position : inside; }
 
 /** 표준선택자 시작 */
 body {
-	font : 13px 'Trebuchet Ms', Verdana, Helvetica, Arial, sans-serif;
+	font  : 13px 'Trebuchet Ms', Verdana, Helvetica, Arial, sans-serif;
 	color : #444;
 	background-color : #888;
 }
@@ -26,32 +26,32 @@ a:link, a:visited { color : inherit; }
 a:hover { text-decoration : underline; }
 strong {
 	font-weight : 800;
-	color : #000;
+	color 		: #000;
 }
 /** 표준선택자 끝 */
 
 /** 네임스페이스 선택자 시작 */
 #spa {
-	postion : absolute;
-	top : 8px;
-	left : 8px;
-	bottom : 8px;
-	right : 8px;
-	min-height : 500px; 
-	min-weight : 500px; 
-	overflow : hidden;
+	postion 		: absolute;
+	top 			: 8px;
+	left 			: 8px;
+	bottom 			: 8px;
+	right 			: 8px;
+	min-height 		: 500px; 
+	min-weight 		: 500px; 
+	overflow 		: hidden;
 	background-color : #fff;
-	border-radius : #fffff;	
+	border-radius 	: #fffff;	
 }
 /** 네임스페이스 선택자 끝 */
 
 /** 유틸리티 선택자 끝시작*/
 .spa-x-select{}
 .spa-x-clearfloat {
-	height : 0 !important;
-	float : none important;
+	height 		: 0 !important;
+	float 		: none important;
 	visibility : hidden;
-	clear : both !important;
+	clear 		: both !important;
 }
 /** 유틸리티 선택자 끝 */
 

@@ -7,6 +7,9 @@ spa.shell = (function() {
 	//-------------------- 모듈스코프변수 시작 --------------------
 	var 
 	configMap = { //정적 정보
+		anchor_schema_map : {
+			chat  : { opened : true, closed : true }
+	    },
 		main_html : String()
 			+'<div class="spa-shell-head">'
 			+'	<div class="spa-shell-head-logo"></div>'
@@ -18,27 +21,26 @@ spa.shell = (function() {
 			+'	<div class="spa-shell-main-content"></div>'
 			+'</div>'
 			+'<div class="spa-shell-foot"></div>'
-			+'<div class="spa-shell-chat"></div>'
+//			+'<div class="spa-shell-chat"></div>'
 			+'<div class="spa-shell-modal"></div>'
-		,
-		chat_extend_time : 250,
-		chat_retract_time : 300,
-		chat_extend_height : 400,
-		chat_retract_height : 15,
-		chat_extended_title : 'Click to retract',
-		chat_retracted_title : 'Click to extend',
-		anchor_schema_map : {
-			chat : {open : true, closed : true}
-		}
+//		,
+//		chat_extend_time 	 : 250,
+//		chat_retract_time 	 : 300,
+//		chat_extend_height   : 400,
+//		chat_retract_height  : 15,
+//		chat_extended_title  : 'Click to retract',
+//		chat_retracted_title : 'Click to extend',
 	},
 	stateMap = { // 동적 정보
-		$container : null,
-		anchor_map : {},
-		is_chat_retracted : true
+//		$container : null,
+		anchor_map : {}
+//		is_chat_retracted : true
 	},
 	jqueryMap = {},
-	copyAnchorMap, changeAnchorPart, onHashchange,
-	setJqueryMap, toggleChat, onClickChat, initModule;
+	copyAnchorMap, setJqueryMap,
+	changeAnchorPart, onHashchange,
+//	toggleChat, onClickChat, 
+	setChatAnchor, initModule;
 	//-------------------- 모듈스코프변수 끝 --------------------
 		
 	//-------------------- 유티리티 메서드  start  --------------------
@@ -46,6 +48,16 @@ spa.shell = (function() {
 		return $.extend( true, {}, stateMap.anchor_map );
 	}
 	//-------------------- 유티리티 메서드  end  --------------------
+	
+	//-------------------- DOM 메서드 /setJqueryMap/ start  --------------------
+	setJqueryMap = function() {
+		var $container = stateMap.$container;
+		jqueryMap = { 
+			$container : $container
+//			$chat 	   : $container.find('.spa-shell-chat')	
+		};
+	};
+	//-------------------- DOM 메서드 /setJqueryMap/ end  --------------------
 	
 	changeAnchorPart = function( arg_map ) {
 		var
@@ -83,10 +95,10 @@ spa.shell = (function() {
 	
 	onHashchange = function() {
 		var
-		anchor_map_previous = copyAnchorMap(),
+		_s_chat_pervious, _s_chat_proposed, s_chat_proposed;
 		anchor_map_proposed,
-		_s_chat_pervious, _s_chat_proposed,
-		s_chat_proposed;
+		is_ok = true,
+		anchor_map_previous = copyAnchorMap();
 		
 		try {
 			anchor_map_proposed = $.uriAnchor.makeAnchorMap();
@@ -104,37 +116,44 @@ spa.shell = (function() {
 			s_chat_proposed = anchor_map_proposed.chat;
 			
 			switch ( s_chat_proposed ) {
-			case 'open' :
-				toggleChat(true);
-				break;
-			case 'closed' :
-				toggleChat(false);
-				break;
-			default :
-				toggleChat(false);
+				case 'opened' :
+					is_ok = spa.chat.setSliderPosition('opened');
+					break;
+					
+				case 'closed' :
+					is_ok = spa.chat.setSliderPosition('closed');
+					break;
+					
+				default :
+					spa.chat.setSliderPosition('closed');
+					delete anchor_map_proposed.chat;
+					$.uriAnchor.setAnchor( anchor_map_proposed, null, true );				
+			}
+		}
+		
+		if ( !is_ok ) {
+			if ( anchor_map_previous ) {
+				$.uriAnchor.setAnchor( anchor_map_previous, null, true );
+				stateMap.anchor_map = anchor_map_previous;
+			}
+			else {
 				delete anchor_map_proposed.chat;
-				$.uriAnchor.setAnchor( anchor_map_proposed, null, true );				
+				$.uriAnchor.setAnchor( anchor_map_proposed, null, true );
 			}
 		}
 		return false;
 	}
 	
-	//-------------------- DOM 메서드 /setJqueryMap/ start  --------------------
-	setJqueryMap = function() {
-		var $container = stateMap.$container;
-		jqueryMap = { 
-			$container : $container,
-			$chat : $container.find('.spa-shell-chat')	
-		};
-	};
-	//-------------------- DOM 메서드 /setJqueryMap/ end  --------------------
+	setChatAnchor = function( position_type ) {
+		return changeAnchorPart({ chat : position_type });
+	}
 	
 	//-------------------- DOM 메서드 /toggleChat/ start  --------------------
 	toggleChat = function( do_extend, callback ) {
 		var
 		px_chat_ht = jqueryMap.$chat.height();
-		is_open = px_chat_ht === configMap.chat_extend_height,
-		is_closed = px_chat_ht === configMap.chat_retract_height,
+		is_open    = px_chat_ht === configMap.chat_extend_height,
+		is_closed  = px_chat_ht === configMap.chat_retract_height,
 		is_sliding = !is_open && !is_closed;
 		
 		if ( is_sliding ) { return false }
@@ -187,12 +206,17 @@ spa.shell = (function() {
 		$.uriAnchor.configModule( {schema_map : configMap.anchor_schema_map} );
 
 		// 기능 모듈 설정 및 초기화
-		spa.chat.configModule( {} );
-		spa.chat.initModule( jqueryMap.$chat );
+		spa.chat.configModule({
+			set_chat_anchor : setChatAnchor,
+			chat_model : spa.model.chat,
+			people_model : spa.model.people
+		});
+//		spa.chat.initModule( jqueryMap.$chat );
+		spa.chat.initModule( jqueryMap.$container );
 		
-		jqueryMap.$chat
-			.attr('title', configMap.chat_retracted_title)
-			.click( onClickChat );
+//		jqueryMap.$chat
+//			.attr('title', configMap.chat_retracted_title)
+//			.click( onClickChat );
 		
 		$(window)
 			.bind('hashchange', onHashchange)
