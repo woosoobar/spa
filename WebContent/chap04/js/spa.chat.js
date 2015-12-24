@@ -61,6 +61,7 @@ spa.chat = (function() {
 	onClickToggle, configModule, initModule;
 	
 	getEmSize = function( elem ) {
+		console.log(elem);
 		return Number(
 			getComputedStyle( elem, '' ).fontSize.match(/\d*\.?\d*/)[0]
 		);
@@ -90,7 +91,7 @@ spa.chat = (function() {
 		px_per_em = getEmSize( jqueryMap.$slider.get(0) );
 		opened_height_em = configMap.slider_opened_em;
 		stateMap.px_per_em = px_per_em;
-		stateMap.slider_closed_px = configMap.closed_em * px_per_em;
+		stateMap.slider_closed_px = configMap.slider_closed_em * px_per_em;
 		stateMap.slider_opened_px = opened_height_em * px_per_em;
 		jqueryMap.$sizer.css({
 			height : (opened_height_em - 2) * px_per_em
@@ -135,7 +136,7 @@ spa.chat = (function() {
 			{height : height_px},
 			animate_time,
 			function() {
-				jqueryMap.$toggleMap.prop('title', slider_title);
+				jqueryMap.$toggle.prop('title', slider_title);
 				jqueryMap.$toggle.text( toggle_text);
 				stateMap.position_type = position_type;
 				if ( callback ) {
@@ -149,7 +150,7 @@ spa.chat = (function() {
 	onClickToggle = function( event ) {
 		var set_chat_anchor = configMap.set_chat_anchor;
 		if ( stateMap.position_type === 'opened' ) {
-			set_chat_anchor('clsoed');
+			set_chat_anchor('closed');
 		}
 		else if ( stateMap.position_type === 'closed' ) {
 			set_chat_anchor('opened');
